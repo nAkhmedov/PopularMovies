@@ -43,23 +43,12 @@
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:visibleOrGone="@{!viewModel.dataLoading &amp;&amp; viewModel.isConnectedToInternet}"
+            app:visibleOrGone="@{viewModel.isConnectedToInternet}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:listitem="@layout/movie_item" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:visibleOrGone="@{viewModel.dataLoading}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/noConnection"

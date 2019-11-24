@@ -34,7 +34,7 @@ class BindingUtils {
 
         @JvmStatic
         @BindingAdapter("imageSrc")
-        fun setImageSource(imageView: ImageView, imgPath: String) {
+        fun setImageSource(imageView: ImageView, imgPath: String?) {
             val drawable = ContextCompat.getDrawable(
                 imageView.context,
                 R.drawable.ic_local_movies)

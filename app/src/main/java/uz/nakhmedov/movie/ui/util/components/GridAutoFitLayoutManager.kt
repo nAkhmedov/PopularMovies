@@ -77,6 +77,10 @@ class GridAutoFitLayoutManager/* Initially set spanCount to 1, will be changed a
         super.onLayoutChildren(recycler, state)
     }
 
+    override fun supportsPredictiveItemAnimations(): Boolean {
+        return false
+    }
+
     companion object {
         private const val sColumnWidth = 200 // assume cell width of 200dp
     }

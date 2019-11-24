@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
  * To change this template use File | Settings | File Templates
  */
 class BaseViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bindTo(data: Any, viewModel: Any) {
+    fun bindTo(data: Any?, viewModel: Any) {
         binding.setVariable(BR.item, data)
         binding.setVariable(BR.viewModel, viewModel)
         binding.executePendingBindings()

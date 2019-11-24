@@ -1,42 +1,41 @@
 package uz.nakhmedov.movie.ui.main
 
 import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import timber.log.Timber
 import uz.nakhmedov.movie.api.Api
+import uz.nakhmedov.movie.data.MovieDataSourceFactory
 import uz.nakhmedov.movie.data.model.Movie
 import uz.nakhmedov.movie.ui.base.BaseViewModel
-import uz.nakhmedov.movie.ui.util.AppConstants
 import uz.nakhmedov.movie.ui.util.rx.SchedulerProvider
 
 class MainViewModel(
-    private val api: Api,
+    api: Api,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
-    init {
-        observeConnection()
-    }
-
-
-    val movieData = MutableLiveData<List<Movie>>()
+    var movieData: LiveData<PagedList<Movie>>
     val messageData = MutableLiveData<String>()
     val dataLoading = ObservableBoolean(false)
     val isConnectedToInternet = ObservableBoolean(false)
+    private val sourceFactory: MovieDataSourceFactory
 
-    fun loadMovies() {
-        dataLoading.set(true)
-        val disposable = api.getPopularMovies(AppConstants.API_KEY)
-            .subscribeOn(schedulerProvider.io())
-            .doFinally { dataLoading.set(false) }
-            .observeOn(schedulerProvider.ui())
-            .subscribe ({ response ->
-                Timber.i("$response")
-                movieData.value = response.results
-            }, Timber::e)
 
-        mCompositeDisposable.add(disposable)
+    init {
+        observeConnection()
+
+        sourceFactory = MovieDataSourceFactory(api, schedulerProvider, mCompositeDisposable, dataLoading)
+        val config = PagedList.Config.Builder()
+            .setPageSize(10)
+            .setInitialLoadSizeHint(10)
+            .setEnablePlaceholders(true)
+            .build()
+
+        movieData = LivePagedListBuilder(sourceFactory, config).build()
     }
 
     fun onItemClick(item: Movie) {
@@ -49,6 +48,9 @@ class MainViewModel(
             .subscribeOn(schedulerProvider.io())
             .subscribe ({ hasInternet ->
                 isConnectedToInternet.set(hasInternet)
+                if (hasInternet) {
+                    sourceFactory.refresh()
+                }
             }, Timber::e)
 
         mCompositeDisposable.add(disposable)

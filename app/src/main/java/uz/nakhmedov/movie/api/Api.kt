@@ -15,5 +15,6 @@ import uz.nakhmedov.movie.data.model.MovieResponse
 interface Api {
     @GET("movie/popular")
     fun getPopularMovies(
-        @Query("api_key") apiKey: String) : Observable<MovieResponse>
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Long) : Observable<MovieResponse>
 }
