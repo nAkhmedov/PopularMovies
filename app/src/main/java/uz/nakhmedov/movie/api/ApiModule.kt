@@ -11,6 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import uz.nakhmedov.movie.BuildConfig
 import uz.nakhmedov.movie.MovieApp
 import uz.nakhmedov.movie.ui.util.AppConstants
 import java.util.concurrent.TimeUnit
@@ -45,14 +46,16 @@ class ApiModule {
     fun provideOkHttpClient(cache: Cache): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
 
-        val logging = HttpLoggingInterceptor { message ->
-            Platform.get().log(
-                Platform.INFO,
-                "Log Util: $message", null
-            )
-        }.setLevel(HttpLoggingInterceptor.Level.BODY)
+        if (BuildConfig.DEBUG) {
+            val logging = HttpLoggingInterceptor { message ->
+                Platform.get().log(
+                        Platform.INFO,
+                        "Log Util: $message", null
+                )
+            }.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-        httpClient.addInterceptor(logging)
+            httpClient.addInterceptor(logging)
+        }
 
         return httpClient.cache(cache)
             .followRedirects(true)
