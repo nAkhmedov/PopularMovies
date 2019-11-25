@@ -43,25 +43,25 @@
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:visibleOrGone="@{viewModel.isConnectedToInternet}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:listitem="@layout/movie_item" />
 
-        <ImageView
-            android:id="@+id/noConnection"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:visibleOrGone="@{!viewModel.isConnectedToInternet}"
-            app:srcCompat="@drawable/ic_signal_wifi_off"
-            android:tint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:visibility="visible" />
+<!--        app:visibleOrGone="@{viewModel.isConnectedToInternet}"-->
+<!--        <ImageView-->
+<!--            android:id="@+id/noConnection"-->
+<!--            android:layout_width="48dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            app:visibleOrGone="@{!viewModel.isConnectedToInternet}"-->
+<!--            app:srcCompat="@drawable/ic_signal_wifi_off"-->
+<!--            android:tint="@color/white"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
+<!--            tools:visibility="visible" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

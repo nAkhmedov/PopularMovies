@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">api.themoviedb.org</domain>
         <domain includeSubdomains="true">clients3.google.com</domain>
+        <domain includeSubdomains="true">image.tmdb.org</domain>
     </domain-config>
 </network-security-config>
